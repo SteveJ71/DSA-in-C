@@ -3,33 +3,46 @@
 #include <string.h>
 #include "bracket_matching.h"
 
-static void trim_newline(char *s) {
+static void trim_newline(char* s)
+{
     if (!s) return;
     size_t n = strlen(s);
-    while (n > 0 && (s[n-1] == '\n' || s[n-1] == '\r')) {
-        s[n-1] = '\0';
+    while (n > 0 && (s[n - 1] == '\n' || s[n - 1] == '\r')) {
+        s[n - 1] = '\0';
         n--;
     }
 }
 
-int main(int argc, char **argv) {
+int main(void)
+{
+    const char* path = "text.txt";
+    FILE* fp = fopen(path, "r");
+    if (!fp) {
+        printf("Error: could not open '%s'\n", path);
+        printf("Tip: put text.txt in the folder you run build.bat from.\n");
+        return 1;
+    }
+
     char buf[4096];
+    int lineNo = 0;
+    int anyUnbalanced = 0;
 
-    const char *input = NULL;
-    if (argc >= 2) {
-        input = argv[1];
-    } else {
-        printf("Enter a line to check: ");
-        if (!fgets(buf, sizeof(buf), stdin)) return 1;
+    while (fgets(buf, sizeof(buf), fp)) {
+        lineNo++;
         trim_newline(buf);
-        input = buf;
+
+        // Optional: skip empty lines
+        if (buf[0] == '\0')
+            continue;
+
+        int ok = brackets_balanced(buf) ? 1 : 0;
+        printf("Line %d: %s | %s\n", lineNo, ok ? "Balanced" : "Unbalanced", buf);
+
+        if (!ok) anyUnbalanced = 1;
     }
 
-    if (brackets_balanced(input)) {
-        printf("Balanced\n");
-        return 0;
-    } else {
-        printf("Unbalanced\n");
-        return 2;
-    }
+    fclose(fp);
+
+    // Return code: 0 if all balanced, 2 if any unbalanced (handy for scripting)
+    return anyUnbalanced ? 2 : 0;
 }
