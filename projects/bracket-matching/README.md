@@ -9,17 +9,22 @@ Supported bracket pairs:
 
 ## Demo
 
-```sh
-cc -Iinclude src/*.c -o bracket_demo
-./bracket_demo "(({}))"
-```
+This program reads bracket strings from a text file named `text.txt`,
+processing one line at a time.
 
-Or read from stdin:
+### Steps
 
-```sh
-./bracket_demo
-# paste a line, press Enter
-```
+1. Create a file called `text.txt` in this directory.
+2. Add one bracket string per line, for example:
+
+(({}))
+([)]
+([]{})
+
+3. Build and run the program:
+
+```bat
+build.bat
 
 ## Notes
 
