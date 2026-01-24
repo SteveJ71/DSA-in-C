@@ -1,4 +1,4 @@
-\
+
 #include "bracket_matching.h"
 #include "stack.h"
 
