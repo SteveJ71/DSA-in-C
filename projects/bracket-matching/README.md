@@ -23,8 +23,10 @@ processing one line at a time.
 
 3. Build and run the program:
 
-```bat
-build.bat
+```bash
+gcc -Wall -Werror -std=c11 -O0 -g -I include -o bracket_matching src/main.c src/stack.c src/bracket_matching.c
+./bracket_matching
+```
 
 ## Notes
 
