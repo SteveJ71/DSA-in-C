@@ -45,6 +45,7 @@ double join(double a, double b, char operator) {
 	else if (operator == '^') {
 		return POWER(a, b);
 	}
+	return 0;
 }
 
 char operator(int index) {
@@ -63,15 +64,17 @@ char operator(int index) {
 	else if (index == 4) {
 		return '^';
 	}
+	return '+';
 }
 
 void hasSolution(int myArray[4]) {
 
-	int noZeros = countZeros(myArray, 3);
+	int noZeros = countZeros(myArray, 4);
 
 	// 3 zero case - no solution
 	if (noZeros > 2) {
 		printf("No Solution Found\n");
+		return;
 	}
 
 	int a = myArray[0];
@@ -81,11 +84,9 @@ void hasSolution(int myArray[4]) {
 	double ab = 0;
 	double bc = 0;
 	double cd = 0;
-	double abcd = 0;
-	float result = 0;
-	char op1 = "";
-	char op2 = "";
-	char op3 = "";
+	char op1 = '+';
+	char op2 = '+';
+	char op3 = '+';
 
 	for (int j = 0; j < 5; j++) {						// First Operator
 		op1 = operator(j);
@@ -118,10 +119,14 @@ void hasSolution(int myArray[4]) {
 				if (join(join(ab, c, op2), d, op3) == 10.0) {
 					printf("Solution found: ((%d%c%d)%c%d)%c%d=10\n", a, op1, b, op2, c, op3, d);
 				}
+
+				//	a.(b.(c.d))
+				if (join(a, join(b, join(c, d, op3), op2), op1) == 10.0) {
+					printf("Solution found: %d%c(%d%c(%d%c%d))=10\n", a, op1, b, op2, c, op3, d);
+				}
 			}
 		}
 	}
-	return false;
 }
 
 
@@ -163,26 +168,28 @@ void heapPermutation(int a[], int size, int n)
 
 }
 
-int main(void) {
+int main(int argc, char *argv[]) {
 
-	// Input with no solution
-	//int input[4] = { 7,1,7,1};
-	//int input[4] = { 1,0,2,2};
-
-	// Other test data
-	//int input[4] = { 9,7,3,7 };
-	//int input[4] = { 2,2,2,6 };
-	int input[4] = { 5,3,4,1 };
-
-
-	printf("\nMake 10 Game\n\n");
-	printf("Train Number: ");
-
+	if (argc != 2 || strlen(argv[1]) != 4) {
+		printf("Usage: %s <4-digit number>\n", argv[0]);
+		printf("Example: %s 5341\n", argv[0]);
+		return 1;
+	}
 
 	for (int i = 0; i < 4; i++) {
-		printf("%d",input[i]);
+		if (argv[1][i] < '0' || argv[1][i] > '9') {
+			printf("Error: all characters must be digits (0-9)\n");
+			return 1;
+		}
 	}
-	printf("\n\n");
+
+	int input[4];
+	for (int i = 0; i < 4; i++) {
+		input[i] = argv[1][i] - '0';
+	}
+
+	printf("\nMake 10 Game\n\n");
+	printf("Train Number: %s\n\n", argv[1]);
 
 	// use heaps algorithm to use all combinations of input.
 

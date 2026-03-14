@@ -62,3 +62,20 @@ Done.
 ```
 
 Press `Ctrl+D` (Linux/Mac) or `Ctrl+Z` (Windows) to end edge input.
+
+## Memory Check
+
+`WGraph` uses `malloc`/`calloc` for the graph struct and each row of the adjacency matrix. `freeGraph` frees all of these. The `PQueue` is a static array — no heap allocation.
+
+Since the program is interactive, pipe input in using a here-document:
+
+```bash
+valgrind -s --leak-check=full --show-leak-kinds=all ./dijkstra << 'EOF'
+5
+0
+0 1 10
+0 2 3
+2 1 4
+1 3 2
+EOF
+```

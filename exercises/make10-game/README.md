@@ -6,22 +6,34 @@ Given 4 digits (as seen on a train number), find all arithmetic expressions usin
 
 1. **Heap's Algorithm** generates all 24 permutations of the 4 digits
 2. For each permutation, all 5³ = 125 operator combinations are tried
-3. For each operator combination, four parenthesisation patterns are tested:
-   - `(ab)·(cd)`
-   - `(a·(bc))·d`
-   - `a·((bc)·d)`
-   - `((ab)·c)·d`
-
-## Known issues
-
-- `hasSolution` is declared `void` but ends with `return false` (bug preserved)
-- The "3 zero case" check returns a message but does not `return` early, so processing continues anyway
+3. For each operator combination, all 5 parenthesisation patterns are tested:
+   - `(a·b)·(c·d)`
+   - `(a·(b·c))·d`
+   - `a·((b·c)·d)`
+   - `((a·b)·c)·d`
+   - `a·(b·(c·d))`
 
 ## Compile & Run
 
 ```bash
 gcc -Wall -Werror -std=c11 -O0 -g -o make10_game make10_game.c -lm
-./make10_game
+./make10_game 5341
 ```
 
-Edit `input[4]` in `main` to test different digit combinations.
+Pass the 4-digit train number as a command line argument. Each character is treated as a separate digit.
+
+## Example output
+
+```
+Make 10 Game
+
+Train Number: 5341
+
+Solution found: (5-3+4)*1... (etc)
+finished!!!!
+```
+
+## Notes
+
+- Duplicate solutions may be printed — the same expression can appear multiple times across different permutations
+- Division by zero is not guarded against; results involving it may print as `inf` or `nan`

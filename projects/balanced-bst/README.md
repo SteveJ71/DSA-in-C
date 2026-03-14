@@ -39,8 +39,8 @@ Sideways display with red nodes printed in terminal colour.
 
 ```bash
 make           # builds both treeLab and rbt
-make treeLab   # interactive BST tester
-make rbt       # red-black tree tester
+./treeLab      # interactive BST tester
+./rbt 5 3 7 1 4  # red-black tree tester
 ```
 
 ### treeLab commands
@@ -59,9 +59,3 @@ make rbt       # red-black tree tester
 | `n` | New empty tree |
 | `q` | Quit |
 
-### rbt usage
-
-```bash
-./rbt 5 3 7 1 4
-```
-Inserts values from command-line arguments and displays the resulting tree.

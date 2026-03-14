@@ -19,7 +19,7 @@ int main() {
         for (j = 0; j < n; j++) {
             innerCount++; // Increment for the condition check in the inner loop
             // Assignment operation
-            int x = i + j;
+            (void)(i + j);
             assignmentCount+= 2; // Increment for the assignment and addition operations
         }
         innerCount++; // Increment for the final condition check in the inner loop
