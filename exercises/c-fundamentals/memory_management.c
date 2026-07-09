@@ -1,4 +1,4 @@
-// Insertion sort on a global array (Note: missing assignment back after inner loop — bug preserved)
+// Insertion sort on a global array
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,6 +12,7 @@ void insertionSort(int array[], int n) {
 		for (j = i - 1; j >= 0 && array[j] > element; j--) {
 			array[j + 1] = array[j];
 		}
+		array[j + 1] = element;
 	}
 }
 

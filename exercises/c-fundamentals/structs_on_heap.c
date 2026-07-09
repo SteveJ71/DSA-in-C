@@ -19,4 +19,6 @@ int main(void) {
 
 	printf("%d\n", n->value);
 	printf("%p\n", n->next);
+
+	free(n);
 }

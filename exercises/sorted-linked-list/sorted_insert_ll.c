@@ -48,6 +48,6 @@ int main(void) {
     printf("Linked List after insertion: ");
     printList(head);
 
-
+    freeList(&head);
     return 0;
 }

@@ -41,18 +41,46 @@ Tree newNode(Item it) {
 Tree rotateRight(Tree);
 Tree rotateLeft(Tree);
 
+// fix red-red violations after insertion
+static Tree insertFixup(Tree t) {
+   // left-left or left-right red-red: rotate right
+   if (isRed(left(t)) && isRed(right(left(t)))) {
+      left(t) = rotateLeft(left(t));
+   }
+   if (isRed(left(t)) && isRed(left(left(t)))) {
+      t = rotateRight(t);
+      colour(t) = BLACK;
+      colour(right(t)) = RED;
+   }
+   // right-right or right-left red-red: rotate left
+   if (isRed(right(t)) && isRed(left(right(t)))) {
+      right(t) = rotateRight(right(t));
+   }
+   if (isRed(right(t)) && isRed(right(right(t)))) {
+      t = rotateLeft(t);
+      colour(t) = BLACK;
+      colour(left(t)) = RED;
+   }
+   return t;
+}
+
+static Tree insertRB(Tree t, Item it) {
+   if (t == NULL)
+      return newNode(it);
+   if (it < data(t))
+      left(t) = insertRB(left(t), it);
+   else if (it > data(t))
+      right(t) = insertRB(right(t), it);
+   else
+      return t;  // duplicate, no insert
+   return insertFixup(t);
+}
+
 // insert a new item into a tree
 Tree TreeInsert(Tree t, Item it) {
-
-   printf("Not yet implemented.\n");
-   printf("Returning a fixed tree instead:\n");
-
-   Tree testTree = newNode(2);
-   colour(testTree) = BLACK;
-   left(testTree) = newNode(1);
-   right(testTree) = newNode(3);
-   return testTree;
-
+   t = insertRB(t, it);
+   colour(t) = BLACK;  // root is always black
+   return t;
 }
 
 // check whether a key is in a Tree

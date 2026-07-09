@@ -55,10 +55,11 @@ void showTree(Tree t) {
 
 // compute height of Tree
 int TreeHeight(Tree t) {
-
-   // not yet implemented
-
-   return -1;
+   if (t == NULL)
+      return -1;
+   int lh = TreeHeight(left(t));
+   int rh = TreeHeight(right(t));
+   return 1 + (lh > rh ? lh : rh);
 }
 
 // count #nodes in Tree

@@ -11,6 +11,6 @@ Node* createNode(int data);
 void insertAtHead(Node** head, int data);
 void insertAtTail(Node** head, int data);
 void printList(Node* head);
-//void freeList(Node** head);
+void freeList(Node** head);
 
 #endif // LINKEDLISTINT_H

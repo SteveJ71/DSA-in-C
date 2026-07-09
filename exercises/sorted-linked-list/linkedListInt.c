@@ -46,12 +46,12 @@ void printList(Node* head) {
     printf("NULL\n");
 }
 
-//// Free the memory allocated for the list
-//void freeList(Node** head) {
-//    Node* temp;
-//    while (*head != NULL) {
-//        temp = *head;
-//        *head = (*head)->next;
-//        free(temp);
-//    }
-//}
+// Free the memory allocated for the list
+void freeList(Node** head) {
+    Node* temp;
+    while (*head != NULL) {
+        temp = *head;
+        *head = (*head)->next;
+        free(temp);
+    }
+}
